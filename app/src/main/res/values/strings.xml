@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Proyecto Murky</string>
+
+    <string name="IpInacap">10.4.21.24</string>
+    <string name="IpLirima">192.168.50.124</string>
+    <string name="IpcasaGus">192.168.0.134</string>
+
+
+    <string name="Version">Proyecto Murky Alpha V 2.1.0</string>
+    <string name="action_settings" />
+    <string name="title_activity_listado_producto">ListadoProducto</string>
+
+    <string name="ListadoProducto">ListadoProducto</string>
+    <string name="title_activity_cuantos">Cuantos</string>
+</resources>

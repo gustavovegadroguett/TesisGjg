@@ -11,32 +11,39 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:weightSum="1">
+        android:weightSum="1"
+        android:foregroundGravity="center_vertical|center_horizontal"
+        android:gravity="center_vertical|center_horizontal"
+        android:layout_centerInParent="true">
 
-        <TextView android:text="@string/app_name" android:layout_width="wrap_content"
+        <TextView android:text="@string/app_name" android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/TituloInicial"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:gravity="center" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Ingrese Datos"
             android:id="@+id/TituloIngreseDatos"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:gravity="center" />
 
         <TableLayout
             android:layout_width="match_parent"
-            android:layout_height="285dp"
-            android:layout_weight="0.70">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="fill_horizontal">
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_horizontal">
+                android:layout_height="wrap_content"
+                android:foregroundGravity="center_vertical|center_horizontal">
+
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="RUT"
                     android:id="@+id/TextRut"
@@ -44,7 +51,7 @@
                     android:layout_gravity="center" />
 
                 <EditText
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/user"
                     android:layout_column="2"
@@ -55,11 +62,10 @@
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_horizontal">
+                android:layout_height="wrap_content">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Contraseña"
                     android:id="@+id/TextPass"
@@ -67,7 +73,7 @@
                     android:layout_gravity="center" />
 
                 <EditText
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
                     android:ems="10"
@@ -78,11 +84,11 @@
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_horizontal">
+                android:layout_height="wrap_content"
+                android:foregroundGravity="center_vertical|center_horizontal">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Ip Servidor"
                     android:id="@+id/TextServer"
@@ -90,18 +96,18 @@
                     android:layout_gravity="center" />
 
                 <EditText
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/server"
                     android:layout_column="2"
-                    android:text="@string/IpInacap" />
+                    android:text="@string/IpLirima" />
 
             </TableRow>
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_horizontal">
+                android:layout_height="wrap_content"
+                android:foregroundGravity="center_vertical|center_horizontal">
 
                 <Button
                     android:layout_width="wrap_content"
@@ -114,8 +120,7 @@
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_horizontal">
+                android:layout_height="wrap_content">
 
                 <Button
                     android:layout_width="wrap_content"

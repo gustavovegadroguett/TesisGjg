@@ -29,7 +29,7 @@
 
             <ListView
                 android:layout_width="330dp"
-                android:layout_height="181dp"
+                android:layout_height="207dp"
                 android:id="@+id/listadoPrincipal" />
 
         </TableLayout>
@@ -45,15 +45,21 @@
 
         <ListView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="167dp"
             android:id="@+id/carritolista" />
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="13dp"
+            android:layout_height="wrap_content"
             android:id="@+id/total"
             android:layout_gravity="right"
             android:gravity="bottom|right" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CONFIRMAR"
+            android:id="@+id/button" />
 
     </LinearLayout>
 </RelativeLayout>

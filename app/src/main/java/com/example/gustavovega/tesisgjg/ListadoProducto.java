@@ -58,8 +58,8 @@ public class ListadoProducto extends ActionBarActivity {
         carrito=(ListView)findViewById(R.id.carritolista);
         carrito.setAdapter(adaptadorsecundario);
         adaptadorsecundario.clear();
-        listado.setOnItemClickListener(new AdapterView.OnItemClickListener() {//al seleccionar un item, se abre nueva actividad
-            @Override
+        listado.setOnItemClickListener(new AdapterView.OnItemClickListener() {//se agrega un listener para los items del listado
+
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent i = new Intent(view.getContext(), Cuantos.class);
                 valores = separar(parent, position);
@@ -212,7 +212,7 @@ public class ListadoProducto extends ActionBarActivity {
     }//se carga la lista de productos
 
     public String[] separar(AdapterView  vista,int lugar){ //se separan los valores por los espacios encontrados, cada uno en una posición diferente
-        String[] valores= new String[4];
+        String[] valores;
         String valor;
         valor = (String)vista.getItemAtPosition(lugar);
         valores=valor.split(" ");

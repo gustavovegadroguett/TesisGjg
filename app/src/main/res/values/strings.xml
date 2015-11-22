@@ -1,14 +1,21 @@
 <resources>
     <string name="app_name">Proyecto Murky</string>
 
-    <string name="IpInacap">10.4.21.24</string>
+    //IPS para variar
+    <string name="IpInacap">10.4.20.226</string>
     <string name="IpLirima">192.168.50.124</string>
-    <string name="IpcasaGus">192.168.0.134</string>
+    <string name="IpcasaGus">192.168.1.104</string>
+    //fin
 
-
+    //Titulo del proyecto
     <string name="Version">Proyecto Murky Alpha V 2.1.0</string>
+
+    //Titulo para los menus
     <string name="action_settings" />
+
+    //Titulo de actividad para Listado producto.
     <string name="title_activity_listado_producto">ListadoProducto</string>
+
 
     <string name="ListadoProducto">ListadoProducto</string>
     <string name="title_activity_cuantos">Cuantos</string>

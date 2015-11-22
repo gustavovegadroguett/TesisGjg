@@ -18,16 +18,16 @@ public class Cuantos extends ActionBarActivity {
     EditText pedido;
     TextView nombre;
     TextView precio;
-    String dato1,dato2,dato3,enviado;
+    String producto;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cuantos);
 
 
-        Bundle datos= this.getIntent().getExtras();
+        Bundle datos= this.getIntent().getExtras();// se recibe el paquete desde el intent enviado
 
-        TextView nombre= (TextView)findViewById(R.id.nombreproducto);
+        TextView nombre= (TextView)findViewById(R.id.nombreproducto);//controles asociados a objetos
         TextView cantidad=(TextView)findViewById(R.id.stockproducto);
         TextView precio= (TextView)findViewById(R.id.precioproducto);
 
@@ -35,11 +35,11 @@ public class Cuantos extends ActionBarActivity {
         //botones para agregar al carrito y para volver sin hacer el pedido
         Button volver= (Button)findViewById(R.id.botonVolver);
         Button carrito= (Button)findViewById(R.id.botonAgregar);
-
+        //mostrar los datos que vienen desde el formulario listado.
         nombre.setText(datos.getString("nombre"));
         cantidad.setText(datos.getString("stock"));
         precio.setText(datos.getString("precio"));
-
+        //establece numero de productos disponibles, para no vender los productos con que no se cuenta.
         oferta=Integer.parseInt(cantidad.getText().toString());
 
     }
@@ -49,21 +49,28 @@ public class Cuantos extends ActionBarActivity {
     }
 
     public void agregarOnClick(View v){
+        int actual;
         pedido=(EditText)findViewById(R.id.pedidoproducto);
         nombre=(TextView)findViewById(R.id.nombreproducto  );
         precio=(TextView)findViewById(R.id.precioproducto);
 
         demanda=Integer.parseInt(pedido.getText().toString());
-        enviado=nombre.getText().toString();
-        envioprecio=Integer.parseInt(precio.getText().toString());
-        if( demanda <= oferta){
-            Log.i("agergarOnclick", "entro oferta " + oferta + "demanda " + demanda);
-            Intent resultIntent = new Intent();
+        producto=nombre.getText().toString();
 
-            resultIntent.putExtra("pedido",Integer.toString(demanda));
-            resultIntent.putExtra("nombre",enviado);
-            resultIntent.putExtra("precio",Integer.toString(envioprecio));
-            setResult(this.RESULT_OK, resultIntent);
+        envioprecio=Integer.parseInt(precio.getText().toString());
+
+        if( demanda <= oferta){
+            actual=oferta-demanda;
+            Log.i("agergarOnclick", "entro oferta " + oferta + "demanda " + demanda);
+            Intent datosDePedido = new Intent();
+
+            datosDePedido.putExtra("pedido", Integer.toString(demanda));
+            datosDePedido.putExtra("nombre", producto);
+            datosDePedido.putExtra("precio", Integer.toString(envioprecio));
+            datosDePedido.putExtra("actual", Integer.toString(actual));
+            Log.i("agergarOnclick", "como quedo stock " + actual);
+
+            setResult(this.RESULT_OK, datosDePedido);
             this.finish();
         }
         else{

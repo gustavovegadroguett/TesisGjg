@@ -100,7 +100,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/server"
                     android:layout_column="2"
-                    android:text="@string/IpLirima" />
+                    android:text="@string/IpcasaGus" />
 
             </TableRow>
 

@@ -113,8 +113,6 @@ public class ListadoProducto extends ActionBarActivity {
                 Log.w("num2"," "+num2);
                 subtotal=num1*num2;
                 totalalmacenado=totalalmacenado+subtotal;
-
-
                 //}
 
                 Log.w("subtotal", " " + subtotal);

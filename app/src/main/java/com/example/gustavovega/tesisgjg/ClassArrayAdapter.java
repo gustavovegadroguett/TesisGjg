@@ -32,9 +32,10 @@ public class ClassArrayAdapter extends ArrayAdapter<ItemLista> {
         if (v == null) {
             LayoutInflater vi;
             vi = LayoutInflater.from(getContext());
-            v = vi.inflate(R.layout.single_list, null);
+            v = vi.inflate(R.layout.single_list, null);// se crea una vista con los parametros de single list.
         }
         ItemLista p = getItem(position);
+
         if (p != null) {
             TextView tt = (TextView) v.findViewById(R.id.nombre);
             TextView tt1 = (TextView) v.findViewById(R.id.cantidad);

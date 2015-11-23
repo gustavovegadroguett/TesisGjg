@@ -110,6 +110,7 @@ public class ListadoProducto extends ActionBarActivity {
                 int num2 = Integer.parseInt(pasadero2);
                 Log.w("num1"," " +num1);
                 Log.w("num2"," "+num2);
+
                 subtotal=num1*num2;
                 totalalmacenado=totalalmacenado+subtotal;// suma de totales
 
@@ -124,7 +125,7 @@ public class ListadoProducto extends ActionBarActivity {
 
                             carrito.setAdapter(adaptadorsecundario);
                           //  separarCiclo(remplazo, "tomate");
-                            adaptadorsecundario.notifyDataSetChanged();
+                          adaptadorsecundario.notifyDataSetChanged();
 
                         }
                     });

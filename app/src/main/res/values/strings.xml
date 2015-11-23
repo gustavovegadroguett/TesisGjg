@@ -8,7 +8,7 @@
     //fin
 
     //Titulo del proyecto
-    <string name="Version">Proyecto Murky Alpha V 2.1.0</string>
+    <string name="Version">Proyecto Murky Alpha</string>
 
     //Titulo para los menus
     <string name="action_settings" />

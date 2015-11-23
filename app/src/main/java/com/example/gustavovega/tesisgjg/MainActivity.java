@@ -76,8 +76,15 @@ public class MainActivity extends ActionBarActivity {
 
                     if (statusCode == 200) {
                         Log.i("en onsuccess", "Antes de verificar " + new String(responseBody));
-                        envioListado(obtenerDatosJson(new String(responseBody)), user, pass, serv);
+                           if (responseBody.length!= 0) {
+                            envioListado(obtenerDatosJson(new String(responseBody)), user, pass, serv);
+                        }else{
+                            Log.i("en onsuccess", "verificando contenido de responsebody " +responseBody.length);
+                               Toast.makeText(MainActivity.this, "Usuario o Password incorrecto ", Toast.LENGTH_LONG).show();
+
+                           }
                     }
+
                 }
 
 

@@ -101,7 +101,9 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:typeface="sans"
-                android:textAlignment="gravity" />
+                android:textAlignment="gravity"
+                android:singleLine="false"
+                android:inputType="number" />
 
         </LinearLayout>
 

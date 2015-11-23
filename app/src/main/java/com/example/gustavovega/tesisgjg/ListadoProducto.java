@@ -106,16 +106,13 @@ public class ListadoProducto extends ActionBarActivity {
                 pasadero=enMovDatos.getString("pedido");
                 pasadero2=enMovDatos.getString("precio");
 
-                //if (!pasadero.equals("") && !pasadero2.equals("")) {
                 int num1 = Integer.parseInt(pasadero);
                 int num2 = Integer.parseInt(pasadero2);
                 Log.w("num1"," " +num1);
                 Log.w("num2"," "+num2);
                 subtotal=num1*num2;
-                totalalmacenado=totalalmacenado+subtotal;
-                //}
+                totalalmacenado=totalalmacenado+subtotal;// suma de totales
 
-                Log.w("subtotal", " " + subtotal);
                 totalmuestra.setText(String.valueOf(totalalmacenado));
                 item.add(itemTemp);
                 adaptadorsecundario = new ClassArrayAdapter(ListadoProducto.this, R.layout.single_list, item);

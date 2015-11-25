@@ -58,7 +58,7 @@ public class ListadoProducto extends AppCompatActivity {
         listado= (ListView)findViewById(R.id.listadoPrincipal);
         listadoFijo= this.getIntent().getExtras();
         totalmuestra=(TextView)findViewById(R.id.total);
-        adaptadorsecundario= new ClassArrayAdapter(this,R.layout.single_item,item);//Se envia el conexto, se referencia el xml
+        adaptadorsecundario= new ClassArrayAdapter(this,R.layout.single_item,item);//Se envia el contexto, se referencia el xml
         // creado por nosotros y la lista de objectos personalizada
 
         carrito=(ListView)findViewById(R.id.carritolista);//carrito donde se iran agregando los resultados

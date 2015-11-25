@@ -40,7 +40,7 @@ public class ClassArrayAdapter extends ArrayAdapter<ItemLista> {
             TextView tt = (TextView) v.findViewById(R.id.nombre);
             TextView tt1 = (TextView) v.findViewById(R.id.cantidad);
             TextView tt3 = (TextView) v.findViewById(R.id.precio);
-           // TextView tt4 = (TextView) v.findViewById(R.id.total);
+
 
             if (tt != null) {
                 tt.setText(p.getNombreProd());

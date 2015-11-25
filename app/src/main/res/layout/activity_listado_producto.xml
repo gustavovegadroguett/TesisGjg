@@ -43,7 +43,8 @@
             android:gravity="center_vertical|center_horizontal"
             android:textSize="20sp"
             android:textStyle="bold|italic"
-            android:layout_weight="0.38" />
+            android:layout_weight="0.38"
+            android:textColor="#d17c05" />
 
         <ListView
             android:layout_width="match_parent"
@@ -58,15 +59,14 @@
             android:weightSum="1">
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="202dp"
                 android:layout_height="wrap_content"
-                android:text="CONFIRMAR"
+                android:text="CONFIRMAR RESERVA"
                 android:id="@+id/button"
-                android:gravity="center"
-                android:layout_weight="0.38" />
+                android:gravity="center" />
 
             <TextView
-                android:layout_width="193dp"
+                android:layout_width="fill_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/total"
                 android:gravity="end|center_horizontal"

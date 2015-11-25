@@ -42,6 +42,7 @@ public class ListadoProducto extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_listado_producto);
         Log.i("ONCREATE", "LISTADO PRODUCTO");
         enMovDatos= new Bundle();
@@ -172,8 +173,8 @@ public class ListadoProducto extends ActionBarActivity {
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 if (statusCode == 200) {
 
-                    Log.i("succes obtener listado", "trdponseBody "+responseBody);
-                    remplazo=obtenerDatosJson(new String(responseBody));
+                    Log.i("succes obtener listado", "trdponseBody " + responseBody);
+                    remplazo = obtenerDatosJson(new String(responseBody));
                     cargaLista(remplazo);
 
                 }
@@ -196,17 +197,7 @@ public class ListadoProducto extends ActionBarActivity {
         listado.setAdapter(adapter);
 
     }//se carga la lista de productos
-    public void cargaListaact(ArrayList<String> datos) {
-        List<String> clon = new ArrayList<>();
-        for (String string : datos) {
-            if (string.matches("a")) {
-                clon.add(string);
-            }
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, datos);
-            listado.setAdapter(adapter);
 
-        }//se carga la lista de productos
-    }
 
 
     public ArrayList<String> separarCiclo(ArrayList<String> entrada,String criterio,int resta){ //se separan los valores por los espacios encontrados, cada uno en una posición diferente

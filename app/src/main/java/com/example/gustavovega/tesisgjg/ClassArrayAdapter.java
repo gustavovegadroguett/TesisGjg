@@ -32,7 +32,7 @@ public class ClassArrayAdapter extends ArrayAdapter<ItemLista> {
         if (v == null) {
             LayoutInflater vi;
             vi = LayoutInflater.from(getContext());
-            v = vi.inflate(R.layout.single_list, null);// se crea una vista con los parametros de single list.
+            v = vi.inflate(R.layout.single_item, null);// se crea una vista con los parametros de single list.
         }
         ItemLista p = getItem(position);
 
@@ -40,7 +40,7 @@ public class ClassArrayAdapter extends ArrayAdapter<ItemLista> {
             TextView tt = (TextView) v.findViewById(R.id.nombre);
             TextView tt1 = (TextView) v.findViewById(R.id.cantidad);
             TextView tt3 = (TextView) v.findViewById(R.id.precio);
-            TextView tt4 = (TextView) v.findViewById(R.id.total);
+           // TextView tt4 = (TextView) v.findViewById(R.id.total);
 
             if (tt != null) {
                 tt.setText(p.getNombreProd());
@@ -51,9 +51,7 @@ public class ClassArrayAdapter extends ArrayAdapter<ItemLista> {
             if (tt3 != null) {
                 tt3.setText(p.getPrecioProd());
             }
-            if (tt4 != null) {
-                tt4.setText(p.getTotal());
-            }
+
         }
         return v;
     }

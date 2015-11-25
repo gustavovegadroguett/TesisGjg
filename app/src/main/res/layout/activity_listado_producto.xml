@@ -46,7 +46,7 @@
             android:layout_weight="0.38" />
 
         <ListView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="167dp"
             android:id="@+id/carritolista"
             android:layout_weight="0.56" />

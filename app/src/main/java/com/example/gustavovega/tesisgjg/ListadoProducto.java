@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,7 +24,7 @@ import java.util.List;
 import cz.msebera.android.httpclient.Header;
 
 
-public class ListadoProducto extends ActionBarActivity {
+public class ListadoProducto extends AppCompatActivity {
     TextView server;
     ListView listado;
     TextView totalmuestra;
@@ -88,6 +89,67 @@ public class ListadoProducto extends ActionBarActivity {
         }
         obtenerDatos(listadoFijo.getString("servidor"));
     }
+    public void  obtenerDatos(final String serv) {
+        AsyncHttpClient cliente = new AsyncHttpClient();
+        RequestParams parametros = new RequestParams();
+        Log.i("obetenerdatos Listado", "servidor "+serv);
+        String URL = "http://" + serv + "/tesis/Android/getProducto.php";
+        Log.i("obetenerdatos Listado", "antes del new asynchttphandler");
+
+        cliente.post(URL, new AsyncHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                if (statusCode == 200) {
+
+                    Log.i("succes obtener listado", "trdponseBody " + responseBody);
+                    remplazo = obtenerDatosJson(new String(responseBody));
+                    cargaLista(remplazo);
+
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                Log.i("Onfail", "fallo");
+            }
+
+
+        });
+
+    }
+    public  ArrayList<String> obtenerDatosJson(String response){
+        ArrayList<String> listado= new ArrayList<>();
+
+        try{Log.i("OBETENER DATOS JSON"," "+response+" ");
+            JSONArray jsonarray= new JSONArray(response);
+            String texto=" No entro for";
+
+            for (int i=0;i<jsonarray.length();i++){
+                Log.i("OBETENER DATOS JSON"," "+texto+" ");
+
+                texto= jsonarray.getJSONObject(i).getString("id_productos")+" "+ jsonarray.getJSONObject(i).getString("nombre")+" "+ jsonarray.getJSONObject(i).getString("stock")+" "+ jsonarray.getJSONObject(i).getString("precio");
+                listado.add(texto);
+
+
+            }
+            Log.i("OBETENER DATOS JSON"," "+texto+" ");
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+
+        return listado;
+
+    } //
+    public void cargaLista(ArrayList<String> datos){
+
+        ArrayAdapter<String> adapter= new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,datos);
+        listado.setAdapter(adapter);
+
+    }//se carga la lista de productos
+
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent pedidoCuantos) {
         super.onActivityResult(requestCode, resultCode, pedidoCuantos);
@@ -158,45 +220,10 @@ public class ListadoProducto extends ActionBarActivity {
 
 
 
-    public void  obtenerDatos(final String serv) {
-        //ArrayList<String> listado = new ArrayList<>();
-        AsyncHttpClient cliente = new AsyncHttpClient();
-        RequestParams parametros = new RequestParams();
-        //parametros.put("minimo", 18);
-        Log.i("obetenerdatos Listado", "servidor "+serv);
-        String URL = "http://" + serv + "/tesis/Android/getProducto.php";
-        Log.i("obetenerdatos Listado", "antes del new asynchttphandler");
-
-        cliente.post(URL, new AsyncHttpResponseHandler() {
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                if (statusCode == 200) {
-
-                    Log.i("succes obtener listado", "trdponseBody " + responseBody);
-                    remplazo = obtenerDatosJson(new String(responseBody));
-                    cargaLista(remplazo);
-
-                }
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                Log.i("Onfail", "fallo");
-            }
 
 
-        });
-
-    }
 
 
-    public void cargaLista(ArrayList<String> datos){
-
-        ArrayAdapter<String> adapter= new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,datos);
-        listado.setAdapter(adapter);
-
-    }//se carga la lista de productos
 
 
 
@@ -225,29 +252,7 @@ public class ListadoProducto extends ActionBarActivity {
 
         return entrada;
     }
-    public  ArrayList<String> obtenerDatosJson(String response){
-        ArrayList<String> listado= new ArrayList<>();
 
-        try{Log.i("OBETENER DATOS JSON"," "+response+" ");
-            JSONArray jsonarray= new JSONArray(response);
-            String texto=" No entro for";
-
-            for (int i=0;i<jsonarray.length();i++){
-                Log.i("OBETENER DATOS JSON"," "+texto+" ");
-
-                texto= jsonarray.getJSONObject(i).getString("id_productos")+" "+ jsonarray.getJSONObject(i).getString("nombre")+" "+ jsonarray.getJSONObject(i).getString("stock")+" "+ jsonarray.getJSONObject(i).getString("precio");
-                listado.add(texto);
-
-
-            }
-            Log.i("OBETENER DATOS JSON"," "+texto+" ");
-        }catch (Exception ex){
-            ex.printStackTrace();
-        }
-
-        return listado;
-
-    } //
     public String[] separar(AdapterView  vista,int lugar){ //se separan los valores por los espacios encontrados, cada uno en una posición diferente
         String[] valores;
         String valor;

@@ -10,7 +10,8 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:weightSum="1">
 
 
         <TextView
@@ -29,7 +30,7 @@
 
             <ListView
                 android:layout_width="330dp"
-                android:layout_height="207dp"
+                android:layout_height="155dp"
                 android:id="@+id/listadoPrincipal" />
 
         </TableLayout>
@@ -41,27 +42,37 @@
             android:text="Carrito de Compra"
             android:gravity="center_vertical|center_horizontal"
             android:textSize="20sp"
-            android:textStyle="bold|italic" />
+            android:textStyle="bold|italic"
+            android:layout_weight="0.38" />
 
         <ListView
             android:layout_width="wrap_content"
             android:layout_height="167dp"
-            android:id="@+id/carritolista" />
+            android:id="@+id/carritolista"
+            android:layout_weight="0.56" />
 
-        <TextView
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/total"
-            android:layout_gravity="end"
-            android:gravity="bottom|end" />
+            android:weightSum="1">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="CONFIRMAR"
-            android:id="@+id/button"
-            android:gravity="center"
-            android:layout_gravity="center" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CONFIRMAR"
+                android:id="@+id/button"
+                android:gravity="center"
+                android:layout_weight="0.38" />
+
+            <TextView
+                android:layout_width="193dp"
+                android:layout_height="match_parent"
+                android:id="@+id/total"
+                android:gravity="end|center_horizontal"
+                android:textStyle="normal|bold"
+                android:textSize="26dp" />
+        </LinearLayout>
 
     </LinearLayout>
 </RelativeLayout>

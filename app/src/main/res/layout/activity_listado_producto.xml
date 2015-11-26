@@ -22,7 +22,8 @@
             android:gravity="center_vertical|center_horizontal"
             android:enabled="false"
             android:textStyle="bold|italic"
-            android:textSize="20sp" />
+            android:textSize="30dp"
+            android:textColor="#430002" />
 
         <TableLayout
             android:layout_width="match_parent"

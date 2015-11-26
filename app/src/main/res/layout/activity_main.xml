@@ -7,34 +7,65 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
 
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/imageView"
+        android:src="@drawable/murky"
+        android:scaleType="fitCenter"
+        android:layout_gravity="center_vertical"
+        android:alpha="0.5"
+        android:foregroundTint="#2cd134"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true" />
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:weightSum="1"
+        android:alpha="1.5"
         android:foregroundGravity="center_vertical|center_horizontal"
         android:gravity="center_vertical|center_horizontal"
-        android:layout_centerInParent="true">
+        android:id="@+id/linearLayout"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/imageView">
 
-        <TextView android:text="@string/app_name" android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+        <TextView android:text="@string/app_name" android:layout_width="251dp"
+            android:layout_height="159dp"
             android:id="@+id/TituloInicial"
+            android:gravity="top|center"
+            android:textSize="30dp"
+            android:textStyle="bold"
             android:layout_gravity="center"
-            android:gravity="center" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Ingrese Datos"
-            android:id="@+id/TituloIngreseDatos"
-            android:layout_gravity="center"
-            android:gravity="center" />
+            android:textColor="@android:color/primary_text_light" />
 
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="fill_horizontal">
+            android:gravity="center_vertical">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ingrese Datos de su Cuenta"
+                    android:id="@+id/TituloIngreseDatos"
+                    android:layout_column="0"
+                    android:gravity="center"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="0.1"
+                    android:layout_span="3"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/primary_text_light" />
+            </TableRow>
 
             <TableRow
                 android:layout_width="match_parent"
@@ -48,15 +79,16 @@
                     android:text="RUT"
                     android:id="@+id/TextRut"
                     android:layout_column="0"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="left|center" />
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/user"
-                    android:layout_column="2"
+                    android:layout_column="1"
                     android:layout_span="2"
-                    android:text="16351549-0" />
+                    android:text="16351549-0"
+                    android:layout_gravity="left|center_horizontal" />
 
             </TableRow>
 
@@ -70,7 +102,7 @@
                     android:text="Contraseña"
                     android:id="@+id/TextPass"
                     android:layout_column="0"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="left|center" />
 
                 <EditText
                     android:layout_width="match_parent"
@@ -79,7 +111,8 @@
                     android:ems="10"
                     android:id="@+id/pass"
                     android:layout_column="2"
-                    android:text="123456789" />
+                    android:text="123456789"
+                    android:layout_gravity="left|center_horizontal" />
             </TableRow>
 
             <TableRow
@@ -93,14 +126,15 @@
                     android:text="Ip Servidor"
                     android:id="@+id/TextServer"
                     android:layout_column="0"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="left|center" />
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/server"
                     android:layout_column="2"
-                    android:text="@string/IpcasaGus" />
+                    android:text="@string/ipLirimaNativa"
+                    android:layout_gravity="left|center_horizontal" />
 
             </TableRow>
 

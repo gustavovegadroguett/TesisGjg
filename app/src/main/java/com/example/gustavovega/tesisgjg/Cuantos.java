@@ -35,10 +35,12 @@ public class Cuantos extends ActionBarActivity {
         //botones para agregar al carrito y para volver sin hacer el pedido
         Button volver= (Button)findViewById(R.id.botonVolver);
         Button carrito= (Button)findViewById(R.id.botonAgregar);
+
         //mostrar los datos que vienen desde el formulario listado.
         nombre.setText(datos.getString("nombre"));
         cantidad.setText(datos.getString("stock"));
         precio.setText(datos.getString("precio"));
+
         //establece numero de productos disponibles, para no vender los productos con que no se cuenta.
         oferta=Integer.parseInt(cantidad.getText().toString());
 
@@ -59,7 +61,7 @@ public class Cuantos extends ActionBarActivity {
 
         envioprecio=Integer.parseInt(precio.getText().toString());
 
-        if( demanda <= oferta){
+        if( demanda <= oferta && pedido!=null && demanda!=0 ){
             actual=oferta-demanda;
             Log.i("agergarOnclick", "entro oferta " + oferta + "demanda " + demanda);
             Intent datosDePedido = new Intent();

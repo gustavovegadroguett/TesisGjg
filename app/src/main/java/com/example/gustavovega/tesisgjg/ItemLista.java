@@ -1,21 +1,29 @@
 package com.example.gustavovega.tesisgjg;
 
+import java.lang.reflect.Array;
+import java.util.Objects;
+
 /**
  * Created by nisho_000 on 21/06/2015.
  */
-public class ItemLista{
+public class ItemLista extends Object {
 
+
+
+
+    private String id;
     private String nombreProd;
     private String stockProd;
     private String precioProd;
-    private String total;
 
-    public String getTotal() {
-        return total;
+
+
+    public String getId() {
+        return id;
     }
 
-    public void setTotal(String total) {
-        this.total = total;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getStockProd() {
@@ -41,4 +49,8 @@ public class ItemLista{
     public void setPrecioProd(String precioProd) {
         this.precioProd = precioProd;
     }
+
+
+
+
 }

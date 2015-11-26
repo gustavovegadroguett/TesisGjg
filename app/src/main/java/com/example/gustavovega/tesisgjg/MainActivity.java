@@ -139,7 +139,7 @@ public class MainActivity extends ActionBarActivity {
             }
         }catch (Exception ex){
 
-            ;
+
             Log.w("Catch obtenerdatosjson","jsonarray"+ex.getMessage());
         }
 

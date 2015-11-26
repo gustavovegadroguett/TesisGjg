@@ -231,7 +231,7 @@ public class ListadoProducto extends AppCompatActivity {
                         public void run() {
 
                             carrito.setAdapter(adaptaCarro);
-                            //  separarCiclo(remplazo, "tomate");
+
                             adaptaCarro.notifyDataSetChanged();
 
                         }
@@ -265,31 +265,7 @@ public class ListadoProducto extends AppCompatActivity {
 
 
 
-    public ArrayList<String> separarCiclo(ArrayList<String> entrada,String criterio,int resta){ //se separan los valores por los espacios encontrados, cada uno en una posición diferente
-        String[] valores;
-        int dePaso;
-        String valor;
-        for (int i=0;i<entrada.size();i++){
 
-            valor=entrada.get(i);
-            valores=valor.split(" ");
-            if(valores[0].equals(criterio)){
-                dePaso =Integer.parseInt(valores[1])-resta;
-                valores[1]=Integer.toString(dePaso);
-                valor=valores[0]+" "+valores[1]+" "+valores[2];
-                entrada.set(i, valor);
-                break;
-            }
-
-
-            Log.i("separarCiclo","actualizando listado1");
-
-
-        }
-
-
-        return entrada;
-    }
 
 
 }

@@ -32,7 +32,7 @@ public class AdaptadorCarrito extends ArrayAdapter<ItemLista> {
         if (v == null ){
             LayoutInflater vi;
             vi = LayoutInflater.from(getContext());
-            v = vi.inflate(R.layout.single_item, null);// se crea una vista, en base a single_item la cual fue creada anteriormentes.
+            v = vi.inflate(R.layout.single_listado, null);// se crea una vista, en base a single_item la cual fue creada anteriormentes.
         }
         ItemLista p = getItem(position);
 

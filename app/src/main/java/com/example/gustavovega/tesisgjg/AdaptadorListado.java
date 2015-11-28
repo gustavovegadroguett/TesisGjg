@@ -48,7 +48,7 @@ public class AdaptadorListado extends ArrayAdapter<ItemLista> {
                 TextView tt4 = (TextView) v.findViewById(R.id.precio);
 
                 if (tt1 != null) {
-                    tt1.setText(p.getNombreProd());
+                    tt1.setText(p.getId());
                 }
                 if (tt2 != null) {
                     tt2.setText(p.getNombreProd());

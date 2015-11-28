@@ -28,18 +28,19 @@ public class ListadoProducto extends AppCompatActivity {
     TextView server;
     ListView listado;
     TextView totalmuestra;
-    ArrayList<String> remplazo;
     int totalalmacenado=0;
     List<ItemLista> item= new ArrayList<>();//lista de objects ItemLista, para albergar los datos necesarios.
     List<ItemLista> item2= new ArrayList<>();
+    List<String[]> separadosalmacen= new ArrayList<>();
     ItemLista itemTemp= new ItemLista(); //Objeto que contendra los datos que requerimos
+    ItemLista itemTemp2= new ItemLista(); //Objeto que contendra los datos que requerimos
     Bundle listadoFijo,enMovDatos;
     String[] separados, separadoseleccion;
     ListView carrito;
     int mRequestCode=100, seleccionado;
     Intent enMovimiento;
-    AdaptadorCarrito adaptaCarro;
 
+    AdaptadorListado  adapter2,adaptaCarro;
 
 
     @Override
@@ -50,10 +51,10 @@ public class ListadoProducto extends AppCompatActivity {
         Log.i("ONCREATE", "LISTADO PRODUCTO");
         enMovDatos= new Bundle();
         enMovimiento= new Intent(this, Cuantos.class);
-
-        itemTemp.setNombreProd("DetalleNombre");//comenzamos a agregar datos por defecto de nuestro proyecto
-        itemTemp.setStockProd("DetalleStock");
-        itemTemp.setPrecioProd("DetallePrecio");
+        itemTemp.setId("ID");
+        itemTemp.setNombreProd("Nombre");//comenzamos a agregar datos por defecto de nuestro proyecto
+        itemTemp.setStockProd("Stock");
+        itemTemp.setPrecioProd("Precio");
         item2.add(itemTemp);  //Agregamos a la lista de objetos, nuestro objeto cargado con los datos
 
 
@@ -61,7 +62,7 @@ public class ListadoProducto extends AppCompatActivity {
         listado= (ListView)findViewById(R.id.listadoPrincipal);
         listadoFijo= this.getIntent().getExtras();
         totalmuestra=(TextView)findViewById(R.id.total);
-        adaptaCarro = new AdaptadorCarrito(this,R.layout.single_item,item2);//Se envia el contexto, se referencia el xml
+        adaptaCarro = new AdaptadorListado(this,R.layout.single_item,item2);//Se envia el contexto, se referencia el xml
         // creado por nosotros y la lista de objectos personalizada
 
         carrito=(ListView)findViewById(R.id.carritolista);//carrito donde se iran agregando los resultados
@@ -76,6 +77,9 @@ public class ListadoProducto extends AppCompatActivity {
 
 
                 seleccionado=position;
+
+                separadoseleccion=separadosalmacen.get(seleccionado);
+                Log.i("succes listado producto", "sepadado" + separadoseleccion.length);
                 enMovDatos.putString("id_producto", separadoseleccion[0]);
                 Log.i("onclicklistener", "put extra" + separadoseleccion[0]);
                 enMovDatos.putString("nombre", separadoseleccion[1]);
@@ -94,18 +98,8 @@ public class ListadoProducto extends AppCompatActivity {
         }
         obtenerDatos(listadoFijo.getString("servidor"));
     }
-    public String[] separar(AdapterView  vista,int lugar){ //se separan los valores por los espacios encontrados, cada uno en una posición diferente
-        String[] valores;
-        String valor;
-        valor = vista.getItemAtPosition(lugar).toString();
-        valores=valor.split(" ");
-        return valores;
-    }
-    public String[] separar2(String valor){ //se separan los valores por los espacios encontrados, cada uno en una posición diferente
-        String[] valores;
-        valores=valor.split(" ");
-        return valores;
-    }
+
+
 
     public void  obtenerDatos(final String serv) { //Aqui se consulta a la base de datos via  metodos asincronos
         AsyncHttpClient cliente = new AsyncHttpClient();
@@ -119,8 +113,8 @@ public class ListadoProducto extends AppCompatActivity {
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 if (statusCode == 200) {
 
-                    remplazo = obtenerDatosJson(new String(responseBody));//remplazo obtiene datos desde json (query en php)
-                    cargaLista(remplazo);
+                    actualizarList(obtenerDatosJson(new String(responseBody)));
+                    cargaLista(separadosalmacen);//remplazo obtiene datos desde json (query en php)
 
                 }
             }
@@ -157,60 +151,82 @@ public class ListadoProducto extends AppCompatActivity {
         return listado;
 
     } //
-    public void cargaLista(ArrayList<String> datos){
+    public void actualizarList(ArrayList entradaDatos){
+        int j=0;
+        String[] sinespacio;
+        while(j<entradaDatos.size()){
+            sinespacio=separar2(entradaDatos.get(j).toString());
+            separadosalmacen.add(sinespacio);
+            j++;
+        }
+    }
 
-       // ArrayAdapter<String> adapter= new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,datos);
-        // listado.setAdapter(adapter);
+    public void cargaLista(List<String[]> datos){// recibe remplazo inicial y con stock actualizado.
 
-        AdaptadorListado  adapter2;
-
+        // se vacia almacen para no repetir valores
+        item.clear();
         int i=0;
-        while (i<datos.size()){
-            separados=separar2(datos.get(i));
-            if(i==0){
-                separadoseleccion=separados;
-            }
-            itemTemp=new ItemLista();
-            itemTemp.setId(separados[0]);
-            itemTemp.setNombreProd(separados[1]);
-            itemTemp.setStockProd(separados[2]);
-            itemTemp.setPrecioProd(separados[3]);
+            while (i<datos.size()){
 
-            item.add(itemTemp);
+                separados=separadosalmacen.get(i);
+                itemTemp=new ItemLista();
+                itemTemp.setId(separados[0]);
+                Log.w("cargaLista", "separado " + separados[0]);
+                itemTemp.setNombreProd(separados[1]);
+                Log.w("cargaLista", "separado " + separados[1]);
+                itemTemp.setStockProd(separados[2]);
+                Log.w("cargaLista", "separado " + separados[2]);
+                itemTemp.setPrecioProd(separados[3]);
+                Log.w("cargaLista", "separado " + separados[3]);
+                item.add(itemTemp);
             i++;
         }
         adapter2= new AdaptadorListado(this,R.layout.single_listado,item);
         listado.setAdapter(adapter2);
 
     }//se carga la lista de productos
-
+    public String[] separaunico(AdapterView vista,int posicion){ //se separan los valores por los espacios encontrados, cada uno en una posición diferente
+        String[] valores;
+        String valor;
+        valor=vista.getItemAtPosition(posicion).toString();
+        valores=valor.split(" ");
+        return valores;
+    }
+    public String[] separar2(String valor){ //se separan los valores por los espacios encontrados, cada uno en una posición diferente
+        String[] valores;
+        valores=valor.split(" ");
+        return valores;
+    }
 
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent pedidoCuantos) {
         super.onActivityResult(requestCode, resultCode, pedidoCuantos);
-        try{
+        /*try{*/
             int subtotal=0;
-            String pasadero,pasadero2;
+            String catidadcalc,preciocalc;
 
-                enMovDatos=pedidoCuantos.getExtras();
+
             if(requestCode == mRequestCode && resultCode == RESULT_OK){
-                Toast.makeText(this,"la compra fue de "+ pedidoCuantos.getStringExtra("pedido").toString() ,Toast.LENGTH_SHORT).show();
+                //se repite la cantidad seleccionada
+                Toast.makeText(this,"la compra fue de "+ pedidoCuantos.getStringExtra("demanda").toString() ,Toast.LENGTH_SHORT).show();
+                enMovDatos=pedidoCuantos.getExtras();
+                //agregamos valores enviados de vuelta para rellenar carrito
+                itemTemp2=new ItemLista();
+                itemTemp2.setId(enMovDatos.getString("id"));
+                itemTemp2.setNombreProd(enMovDatos.getString("nombre"));
+                itemTemp2.setStockProd(enMovDatos.getString("demanda"));
+                itemTemp2.setPrecioProd(enMovDatos.getString("precio"));
 
+                //se crea un string para actualizar el valor en la lista general
+                String actualizada= itemTemp2.getId()+itemTemp2.getNombreProd()+itemTemp2.getStockProd()+enMovDatos.getString("stockactual");
 
-                itemTemp=new ItemLista();
-                itemTemp.setId(enMovDatos.getString("id"));
-                itemTemp.setNombreProd(enMovDatos.getString("nombre"));
-                itemTemp.setStockProd(enMovDatos.getString("pedido"));
-                itemTemp.setPrecioProd(enMovDatos.getString("precio"));
+                Log.w("Activity Result",actualizada);
+                catidadcalc=enMovDatos.getString("demanda");
+                preciocalc=enMovDatos.getString("precio");
 
-                String actualizada= enMovDatos.getString("id")+"  "+enMovDatos.getString("nombre")+"  "+enMovDatos.getString("actual")+"  "+enMovDatos.getString("precio");
-
-                pasadero=enMovDatos.getString("pedido");
-                pasadero2=enMovDatos.getString("precio");
-
-                int num1 = Integer.parseInt(pasadero);
-                int num2 = Integer.parseInt(pasadero2);
+                int num1 = Integer.parseInt(catidadcalc);
+                int num2 = Integer.parseInt(preciocalc);
                 Log.w("num1"," " +num1);
                 Log.w("num2"," "+num2);
 
@@ -218,12 +234,16 @@ public class ListadoProducto extends AppCompatActivity {
                 totalalmacenado=totalalmacenado+subtotal;// suma de totales
 
                 totalmuestra.setText(String.valueOf(totalalmacenado));
-                item2.add(itemTemp);
+                item2.add(itemTemp2);
 
-                remplazo.set(seleccionado, actualizada);//
-                cargaLista(remplazo);
+                separadoseleccion=separadosalmacen.get(seleccionado);// se cambia la linea seleccionada con nueva cantidad
+                separadoseleccion[2]=enMovDatos.getString("stockactual");
+                separadosalmacen.set(seleccionado,separadoseleccion);
+                cargaLista(separadosalmacen);
 
-                adaptaCarro = new AdaptadorCarrito(ListadoProducto.this,R.layout.single_item, item2);
+
+
+                adaptaCarro = new AdaptadorListado(ListadoProducto.this,R.layout.single_listado, item2);
 
                 try {
                     runOnUiThread(new Runnable() {
@@ -231,7 +251,6 @@ public class ListadoProducto extends AppCompatActivity {
                         public void run() {
 
                             carrito.setAdapter(adaptaCarro);
-
                             adaptaCarro.notifyDataSetChanged();
 
                         }
@@ -243,9 +262,9 @@ public class ListadoProducto extends AppCompatActivity {
             }else{
                 Toast.makeText(this,"volvio mal =(",Toast.LENGTH_SHORT).show();
             }
-        }catch (Exception ex){
+        /*}catch (Exception ex){
             Log.w("onActivityResult","catch fuera " + ex.getMessage());
-        }
+        }*/
     }
 
 

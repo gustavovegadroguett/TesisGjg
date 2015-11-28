@@ -95,7 +95,7 @@ public class MainActivity extends ActionBarActivity {
                         @Override
                         public void run() {
 
-                            Toast.makeText(MainActivity.this, "Detalles: Debe ingresar un host valido: " + error.getMessage(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(MainActivity.this, " Debe ingresar un host valido", Toast.LENGTH_LONG).show();
 
                         }
                     });

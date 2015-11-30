@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //Asignamos los controles de nuestro layout xml a variables accesibles desde java
         rutUser=(EditText)findViewById(R.id.rut);
-        usuario= (EditText)findViewById(R.id.user);
         contra= (EditText)findViewById(R.id.pass);
         servidor= (EditText)findViewById(R.id.server);
         aceptar= (Button)findViewById(R.id.ButtonIngreso);
@@ -54,21 +53,21 @@ public class MainActivity extends AppCompatActivity {
     }
     public void ingresoOnClick(View v){
         String rut= rutUser.getText().toString();
-        String user= usuario.getText().toString();
+
         String password=contra.getText().toString();
         String server=servidor.getText().toString();
-        obtenerDatos(rut,user, password, server);
+        obtenerDatos(rut,password, server);
     }
     public void salidaOnClick(View v){
         this.finish();
     }
 
-    public void   obtenerDatos(final String rut,final String user,final String pass,final String serv){
+    public void   obtenerDatos(final String rut,final String pass,final String serv){
         try {
             AsyncHttpClient cliente = new AsyncHttpClient();
-            Log.i("obetener datos", "check de datos " + user + " " + pass + " " + serv);
+            Log.i("obetener datos", "check de datos " + rut + " " + pass + " " + serv);
             RequestParams parametros = new RequestParams();
-            parametros.add("rut", user);
+            parametros.add("rut", rut);
             parametros.add("pass", pass);
             String serverPhp = "http://" + serv + "/tesis/Android/logindatos.php";
             Log.i("obetener datos", "antes del new asynchttphandler");
@@ -82,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                     if (statusCode == 200) {
                         Log.i("en onsuccess", "Antes de verificar " + new String(responseBody));
                            if (responseBody.length!= 0) {
-                            envioListado(obtenerDatosJson(new String(responseBody)),rut, user, pass, serv);
+                            envioListado(obtenerDatosJson(new String(responseBody)),rut, pass, serv);
                         }else{
                             Log.i("en onsuccess", "verificando contenido de responsebody " +responseBody.length);
                                Toast.makeText(MainActivity.this, "Usuario o Password incorrecto ", Toast.LENGTH_LONG).show();
@@ -111,14 +110,17 @@ public class MainActivity extends AppCompatActivity {
             Log.w("Catch de obtenerDatos","Detalles: "+ex.getLocalizedMessage());
         }
     }
-    public void envioListado(ArrayList<String> datos,String rut, String user,String password, String server){
-        Log.i("Verificar dentro", "check antes del envío"+ user +" "+ password +" "+server+" "+datos.get(2).toString());
+    public void envioListado(ArrayList<String> datos,String rut,String password, String server){
+        Log.i("Verificar dentro", "check antes del envío"+rut +" "+ password +" "+server+" "+datos.get(2).toString());
         try{
             Intent i = new Intent(this, ListadoProducto.class);
-            i.putExtra("rut", rut);
-            i.putExtra("password", password);
-            i.putExtra("servidor", server);
+
+            i.putExtra("rut",datos.get(1).toString());
             i.putExtra("nombre",datos.get(2).toString());
+            i.putExtra("telefono",datos.get(3).toString());
+            i.putExtra("email",datos.get(4).toString());
+            i.putExtra("clave", datos.get(5));
+            i.putExtra("servidor", server);
             Log.i("SALIDA MAIN ACTIVITY","ENTRADA LISTADO PROD");
         startActivity(i);
         }catch(Exception ex){

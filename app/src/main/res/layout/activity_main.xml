@@ -118,7 +118,8 @@
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:foregroundGravity="center_vertical|center_horizontal">
+                android:foregroundGravity="center_vertical|center_horizontal"
+                          >
 
                 <TextView
                     android:layout_width="match_parent"
@@ -133,7 +134,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/server"
                     android:layout_column="2"
-                    android:text="@string/ipLirimaNativa"
+                    android:text="@string/IpLirima"
                     android:layout_gravity="left|center_horizontal" />
 
             </TableRow>

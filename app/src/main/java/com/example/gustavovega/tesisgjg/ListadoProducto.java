@@ -8,8 +8,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +17,9 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,17 +30,20 @@ public class ListadoProducto extends AppCompatActivity {
     TextView server;
     ListView listado;
     TextView totalmuestra;
-    int totalalmacenado=0;
+    Button confirmar;
+
     List<ItemLista> item= new ArrayList<>();//lista de objects ItemLista, para albergar los datos necesarios.
     List<ItemLista> item2= new ArrayList<>();
     List<String[]> separadosalmacen= new ArrayList<>();
     ItemLista itemTemp= new ItemLista(); //Objeto que contendra los datos que requerimos
     ItemLista itemTemp2= new ItemLista(); //Objeto que contendra los datos que requerimos
-    Bundle listadoFijo,enMovDatos;
+    Bundle datosLogin,enMovDatos;
     String[] separados, separadoseleccion;
     ListView carrito;
-    int mRequestCode=100, seleccionado;
+    String Rut;
+    int mRequestCode=100, seleccionado,totalalmacenado=0;
     Intent enMovimiento;
+
 
     AdaptadorListado  adapter2,adaptaCarro;
 
@@ -60,30 +65,34 @@ public class ListadoProducto extends AppCompatActivity {
 
         server=(TextView)findViewById(R.id.ListadoServidor);
         listado= (ListView)findViewById(R.id.listadoPrincipal);
-        listadoFijo= this.getIntent().getExtras();
+        confirmar=(Button)findViewById(R.id.botonConfirma);
+        datosLogin = this.getIntent().getExtras(); //se almacenan datos desde login
         totalmuestra=(TextView)findViewById(R.id.total);
         adaptaCarro = new AdaptadorListado(this,R.layout.single_item,item2);//Se envia el contexto, se referencia el xml
-        // creado por nosotros y la lista de objectos personalizada
+
 
         carrito=(ListView)findViewById(R.id.carritolista);//carrito donde se iran agregando los resultados
         carrito.setAdapter(adaptaCarro);
 
 
-        listado.setOnItemClickListener(new AdapterView.OnItemClickListener() {//se agrega un listener para los items del listado
+        Rut=datosLogin.getString("usuario");
+        if(datosLogin !=null){
+            server.setText("Bienvenido estimado/a  " + datosLogin.getString("nombre"));
 
+        }
+        obtenerDatos(datosLogin.getString("servidor"));//se realiza la conexion para obtener datos
+
+        listado.setOnItemClickListener(new AdapterView.OnItemClickListener()//se agrega un listener para los items del listado
+        {
             @SuppressLint("NewApi")
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-
-
-                seleccionado=position;
-
-                separadoseleccion=separadosalmacen.get(seleccionado);
+                seleccionado = position; //Se alamacena posicion del objeto seleccionado para luego actualizarla
+                separadoseleccion = separadosalmacen.get(seleccionado);//funcion que separa
                 Log.i("succes listado producto", "sepadado" + separadoseleccion.length);
                 enMovDatos.putString("id_producto", separadoseleccion[0]);
                 Log.i("onclicklistener", "put extra" + separadoseleccion[0]);
                 enMovDatos.putString("nombre", separadoseleccion[1]);
-                Log.i("succes listado producto", "put extra" +separadoseleccion[1]);
+                Log.i("succes listado producto", "put extra" + separadoseleccion[1]);
                 enMovDatos.putString("stock", separadoseleccion[2]);
                 Log.i("succes listado producto", "put extra" + separadoseleccion[2]);
                 enMovDatos.putString("precio", separadoseleccion[3]);
@@ -92,13 +101,51 @@ public class ListadoProducto extends AppCompatActivity {
                 startActivityForResult(enMovimiento, mRequestCode);
             }
         });
-        if(listadoFijo!=null){
-            server.setText("Bienvenido estimado/a  " + listadoFijo.getString("nombre"));
+
+        confirmar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                enviaDatos(separadosalmacen, datosLogin.getString("servidor"));
+
+
+            }
+        });
+    }
+    public void enviaDatos(final List<String[]> lista, String serv){
+        AsyncHttpClient cliente = new AsyncHttpClient();
+        Log.i("enviaDatos", "servidor "+serv);
+        String URL = "http://" + serv + "/tesis/Android/descuentoCuantos.php";
+        Log.i("enviaDatos", "antes del new asynchttphandler");
+        final JSONArray enviarJson = new JSONArray();
+        RequestParams enviando=new RequestParams("json",enviarJson);
+        for(int i=0;i<lista.size();i++){
+            try {
+
+                enviarJson.put(lista.get(i));
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
         }
-        obtenerDatos(listadoFijo.getString("servidor"));
-    }
+        cliente.post(URL,enviando,new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                if (statusCode == 200) {
+                    Toast.makeText(ListadoProducto.this, "Reserva Exitosa",Toast.LENGTH_LONG).show();
 
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                Log.i("onfail de obtenerDatos", "fallo");
+            }
+
+
+        });
+
+    }
 
 
     public void  obtenerDatos(final String serv) { //Aqui se consulta a la base de datos via  metodos asincronos

@@ -63,7 +63,7 @@
                 android:layout_width="202dp"
                 android:layout_height="wrap_content"
                 android:text="CONFIRMAR RESERVA"
-                android:id="@+id/button"
+                android:id="@+id/botonConfirma"
                 android:gravity="center" />
 
             <TextView

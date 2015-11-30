@@ -75,7 +75,7 @@ public class ListadoProducto extends AppCompatActivity {
         carrito.setAdapter(adaptaCarro);
 
 
-        Rut=datosLogin.getString("usuario");
+        Rut=datosLogin.getString("id");
         if(datosLogin !=null){
             server.setText("Bienvenido estimado/a  " + datosLogin.getString("nombre"));
 

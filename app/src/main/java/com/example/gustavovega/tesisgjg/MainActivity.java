@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.loopj.android.http.*;
 
@@ -29,7 +30,7 @@ import cz.msebera.android.httpclient.Header;
 
 
 public class MainActivity extends AppCompatActivity {
-    EditText rut;
+    EditText rutUser;
     EditText usuario;
     EditText contra;
     EditText servidor;
@@ -42,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //Asignamos los controles de nuestro layout xml a variables accesibles desde java
-        rut=(EditText)findViewById(R.id.id);
+        rutUser=(EditText)findViewById(R.id.rut);
         usuario= (EditText)findViewById(R.id.user);
         contra= (EditText)findViewById(R.id.pass);
         servidor= (EditText)findViewById(R.id.server);
@@ -52,17 +53,17 @@ public class MainActivity extends AppCompatActivity {
 
     }
     public void ingresoOnClick(View v){
-        String id=rut.getText().toString();
+        String rut= rutUser.getText().toString();
         String user= usuario.getText().toString();
         String password=contra.getText().toString();
         String server=servidor.getText().toString();
-        obtenerDatos(id,user, password, server);
+        obtenerDatos(rut,user, password, server);
     }
     public void salidaOnClick(View v){
         this.finish();
     }
 
-    public void   obtenerDatos(final String id,final String user,final String pass,final String serv){
+    public void   obtenerDatos(final String rut,final String user,final String pass,final String serv){
         try {
             AsyncHttpClient cliente = new AsyncHttpClient();
             Log.i("obetener datos", "check de datos " + user + " " + pass + " " + serv);
@@ -81,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
                     if (statusCode == 200) {
                         Log.i("en onsuccess", "Antes de verificar " + new String(responseBody));
                            if (responseBody.length!= 0) {
-                            envioListado(obtenerDatosJson(new String(responseBody)),id, user, pass, serv);
+                            envioListado(obtenerDatosJson(new String(responseBody)),rut, user, pass, serv);
                         }else{
                             Log.i("en onsuccess", "verificando contenido de responsebody " +responseBody.length);
                                Toast.makeText(MainActivity.this, "Usuario o Password incorrecto ", Toast.LENGTH_LONG).show();
@@ -110,12 +111,11 @@ public class MainActivity extends AppCompatActivity {
             Log.w("Catch de obtenerDatos","Detalles: "+ex.getLocalizedMessage());
         }
     }
-    public void envioListado(ArrayList<String> datos,String id, String user,String password, String server){
+    public void envioListado(ArrayList<String> datos,String rut, String user,String password, String server){
         Log.i("Verificar dentro", "check antes del envío"+ user +" "+ password +" "+server+" "+datos.get(2).toString());
         try{
             Intent i = new Intent(this, ListadoProducto.class);
-            i.putExtra("id",id);
-            i.putExtra("usuario", user);
+            i.putExtra("rut", rut);
             i.putExtra("password", password);
             i.putExtra("servidor", server);
             i.putExtra("nombre",datos.get(2).toString());
@@ -132,14 +132,19 @@ public class MainActivity extends AppCompatActivity {
         try{
             JSONArray jsonarray= new JSONArray(response);
             Log.w("Ex obtenerdatosjson","jsonarray tamano "+jsonarray.length());
-            String texto,texto2,texto3;
+            String rut,nombre,telefono,email,clave;
             for (int i=0;i<jsonarray.length();i++){
-                texto= jsonarray.getJSONObject(i).getString("RUT");
-                texto2= jsonarray.getJSONObject(i).getString("Clave");
-                texto3= jsonarray.getJSONObject(i).getString("Nombre");
-                listado.add(texto);
-                listado.add(texto2);
-                listado.add(texto3);
+                rut= jsonarray.getJSONObject(i).getString("RUT");
+                nombre= jsonarray.getJSONObject(i).getString("Nombre");
+                telefono=jsonarray.getJSONObject(i).getString("Telefono");
+                email=jsonarray.getJSONObject(i).getString("Email");
+                clave= jsonarray.getJSONObject(i).getString("Clave");
+
+                listado.add(rut);
+                listado.add(nombre);
+                listado.add(telefono);
+                listado.add(email);
+                listado.add(clave);
 
             }
         }catch (Exception ex){

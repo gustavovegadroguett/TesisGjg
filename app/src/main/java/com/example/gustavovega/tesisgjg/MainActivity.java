@@ -115,11 +115,11 @@ public class MainActivity extends AppCompatActivity {
         try{
             Intent i = new Intent(this, ListadoProducto.class);
 
-            i.putExtra("rut",datos.get(1).toString());
-            i.putExtra("nombre",datos.get(2).toString());
-            i.putExtra("telefono",datos.get(3).toString());
-            i.putExtra("email",datos.get(4).toString());
-            i.putExtra("clave", datos.get(5));
+            i.putExtra("rut",datos.get(0).toString());
+            i.putExtra("nombre",datos.get(1).toString());
+            i.putExtra("telefono",datos.get(2).toString());
+            i.putExtra("email",datos.get(3).toString());
+            i.putExtra("clave", datos.get(4));
             i.putExtra("servidor", server);
             Log.i("SALIDA MAIN ACTIVITY","ENTRADA LISTADO PROD");
         startActivity(i);
@@ -143,11 +143,15 @@ public class MainActivity extends AppCompatActivity {
                 clave= jsonarray.getJSONObject(i).getString("Clave");
 
                 listado.add(rut);
+                Log.w("obtenerDatosJson", "RUT " + rut);
                 listado.add(nombre);
+                Log.w("obtenerDatosJson", "Nombre " + nombre);
                 listado.add(telefono);
+                Log.w("obtenerDatosJson", "Telefono" + telefono);
                 listado.add(email);
+                Log.w("obtenerDatosJson", "email"+email);
                 listado.add(clave);
-
+                Log.w("obtenerDatosJson", "clave"+clave);
             }
         }catch (Exception ex){
 

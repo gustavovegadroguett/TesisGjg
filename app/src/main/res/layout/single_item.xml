@@ -5,7 +5,21 @@ android:orientation="horizontal"
 android:layout_rowWeight="1"
 android:baselineAligned="false">
 
-<TextView
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:text="id"
+        android:id="@+id/textView2"
+        android:layout_weight="1"
+        android:background="#094621"
+        android:gravity="center"
+        android:autoText="false"
+        android:elegantTextHeight="false"
+        android:textStyle="bold"
+        android:textSize="15dp"
+        android:textColor="#2ad1c0" />
+
+    <TextView
     android:layout_width="match_parent"
     android:layout_height="20dp"
     android:text="Nombre"

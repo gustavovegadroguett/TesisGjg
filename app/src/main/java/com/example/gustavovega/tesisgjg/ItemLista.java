@@ -1,8 +1,5 @@
 package com.example.gustavovega.tesisgjg;
 
-import java.lang.reflect.Array;
-import java.util.Objects;
-
 /**
  * Created by nisho_000 on 21/06/2015.
  */
@@ -12,9 +9,9 @@ public class ItemLista extends Object {
 
 
     private String id;
-    private String nombreProd;
-    private String stockProd;
-    private String precioProd;
+    private String nombreprod;
+    private String stockprod;
+    private String precioprod;
 
 
 
@@ -26,28 +23,28 @@ public class ItemLista extends Object {
         this.id = id;
     }
 
-    public String getStockProd() {
-        return stockProd;
+    public String getStockprod() {
+        return stockprod;
     }
 
-    public void setStockProd(String stockProd) {
-        this.stockProd = stockProd;
+    public void setStockprod(String stockprod) {
+        this.stockprod = stockprod;
     }
 
-    public String getNombreProd() {
-        return nombreProd;
+    public String getNombreprod() {
+        return nombreprod;
     }
 
-    public void setNombreProd(String nombreProd) {
-        this.nombreProd = nombreProd;
+    public void setNombreprod(String nombreprod) {
+        this.nombreprod = nombreprod;
     }
 
-    public String getPrecioProd() {
-        return precioProd;
+    public String getPrecioprod() {
+        return precioprod;
     }
 
-    public void setPrecioProd(String precioProd) {
-        this.precioProd = precioProd;
+    public void setPrecioprod(String precioprod) {
+        this.precioprod = precioprod;
     }
 
 

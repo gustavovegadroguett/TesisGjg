@@ -1,6 +1,5 @@
 package com.example.gustavovega.tesisgjg;
 
-import android.content.ClipData;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,13 +42,13 @@ public class AdaptadorCarrito extends ArrayAdapter<ItemLista> {
             TextView tt3 = (TextView) v.findViewById(R.id.precio);
 
             if (tt1 != null) {
-                tt1.setText(p.getNombreProd());
+                tt1.setText(p.getNombreprod());
             }
             if (tt2 != null) {
-                tt2.setText(p.getStockProd());
+                tt2.setText(p.getStockprod());
             }
             if (tt3 != null) {
-                tt3.setText(p.getPrecioProd());
+                tt3.setText(p.getPrecioprod());
             }
 
 

@@ -25,6 +25,11 @@
             android:textSize="30dp"
             android:textColor="#430002" />
 
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="23dp"
+            android:id="@+id/cabeceralistado" />
+
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -44,14 +49,18 @@
             android:gravity="center_vertical|center_horizontal"
             android:textSize="20sp"
             android:textStyle="bold|italic"
-            android:layout_weight="0.38"
+            android:layout_weight="0.20"
             android:textColor="#d17c05" />
 
         <ListView
             android:layout_width="match_parent"
-            android:layout_height="167dp"
-            android:id="@+id/carritolista"
-            android:layout_weight="0.56" />
+            android:layout_height="23dp"
+            android:id="@+id/cabecera" />
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="114dp"
+            android:id="@+id/carritolista" />
 
         <LinearLayout
             android:orientation="horizontal"

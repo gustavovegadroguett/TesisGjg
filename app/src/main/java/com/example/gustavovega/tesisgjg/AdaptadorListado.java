@@ -51,13 +51,13 @@ public class AdaptadorListado extends ArrayAdapter<ItemLista> {
                     tt1.setText(p.getId());
                 }
                 if (tt2 != null) {
-                    tt2.setText(p.getNombreProd());
+                    tt2.setText(p.getNombreprod());
                 }
                 if (tt3 != null) {
-                    tt3.setText(p.getStockProd());
+                    tt3.setText(p.getStockprod());
                 }
                 if (tt4 != null) {
-                    tt4.setText(p.getPrecioProd());
+                    tt4.setText(p.getPrecioprod());
                 }
 
 

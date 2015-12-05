@@ -12,14 +12,13 @@
         android:layout_height="fill_parent"
         android:id="@+id/imageView"
         android:src="@drawable/murky"
-        android:scaleType="fitCenter"
+        android:scaleType="fitStart"
         android:layout_gravity="center_vertical"
         android:alpha="0.5"
         android:foregroundTint="#2cd134"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true" />
+        android:layout_alignParentEnd="true" />
 
     <LinearLayout
         android:orientation="vertical"
@@ -30,9 +29,9 @@
         android:foregroundGravity="center_vertical|center_horizontal"
         android:gravity="center_vertical|center_horizontal"
         android:id="@+id/linearLayout"
+        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/imageView">
+        android:layout_alignParentStart="true">
 
         <TextView android:text="@string/app_name" android:layout_width="251dp"
             android:layout_height="159dp"
@@ -89,7 +88,8 @@
                     android:layout_column="1"
                     android:layout_span="2"
                     android:text="16351549-0"
-                    android:layout_gravity="left|center_horizontal" />
+                    android:layout_gravity="left|center_horizontal"
+                    android:inputType="number|phone" />
 
             </TableRow>
 
@@ -120,7 +120,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:foregroundGravity="center_vertical|center_horizontal"
-                          >
+                >
 
                 <TextView
                     android:layout_width="match_parent"
@@ -135,8 +135,9 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/server"
                     android:layout_column="2"
-                    android:text="@string/IpLirima"
-                    android:layout_gravity="left|center_horizontal" />
+                    android:text="@string/IpcasaGus2"
+                    android:layout_gravity="left|center_horizontal"
+                    android:inputType="number|phone" />
 
             </TableRow>
 

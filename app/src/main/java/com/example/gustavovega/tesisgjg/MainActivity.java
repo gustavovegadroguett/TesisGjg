@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     public void envioListado(ArrayList<String> datos,String rut,String password, String server){
-        Log.i("Verificar dentro", "check antes del envío"+rut +" "+ password +" "+server+" "+datos.get(2).toString());
+
         try{
             Intent i = new Intent(this, ListadoProducto.class);
 

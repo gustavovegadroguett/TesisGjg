@@ -1,6 +1,8 @@
 package com.example.gustavovega.tesisgjg;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -168,6 +170,7 @@ public class ListadoProducto extends AppCompatActivity {
                     insertarDetalle(enviarJson, resultado, serv);
 
                 }
+                carrito.setAdapter(null);
             }
 
             @Override
@@ -204,9 +207,6 @@ public class ListadoProducto extends AppCompatActivity {
             }
         });
     }
-
-
-
     public void insertarPedido(RequestParams datosPedido, final int resultado, String serv){
 
         AsyncHttpClient cliente = new AsyncHttpClient();
@@ -224,7 +224,7 @@ public class ListadoProducto extends AppCompatActivity {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                Log.i("onfail  insertar pedido"," "+resultado);
+                Log.i("onfail  insertar pedido", " " + resultado);
             }
         });
     }
@@ -399,6 +399,8 @@ public class ListadoProducto extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
 
 
 

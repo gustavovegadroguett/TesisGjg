@@ -18,7 +18,7 @@
         android:foregroundTint="#2cd134"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="false" />
 
     <LinearLayout
         android:orientation="vertical"
@@ -89,7 +89,8 @@
                     android:layout_span="2"
                     android:text="16351549-0"
                     android:layout_gravity="left|center_horizontal"
-                    android:inputType="number|phone" />
+                    android:inputType="number|phone"
+                    android:maxLength="10" />
 
             </TableRow>
 
@@ -137,7 +138,8 @@
                     android:layout_column="2"
                     android:text="@string/IpcasaGus2"
                     android:layout_gravity="left|center_horizontal"
-                    android:inputType="number|phone" />
+                    android:inputType="number|phone"
+                    android:maxLength="15" />
 
             </TableRow>
 
@@ -152,7 +154,8 @@
                     android:text="Ingreso"
                     android:id="@+id/ButtonIngreso"
                     android:layout_column="2"
-                    android:onClick="ingresoOnClick" />
+                    android:onClick="ingresoOnClick"
+                    android:gravity="center" />
             </TableRow>
 
             <TableRow
@@ -165,7 +168,8 @@
                     android:text="Salida"
                     android:id="@+id/ButtonSalida"
                     android:layout_column="2"
-                    android:onClick="salidaOnClick" />
+                    android:onClick="salidaOnClick"
+                    android:gravity="center" />
             </TableRow>
 
         </TableLayout>

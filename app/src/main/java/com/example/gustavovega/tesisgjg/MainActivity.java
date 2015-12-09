@@ -1,5 +1,6 @@
 package com.example.gustavovega.tesisgjg;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Looper;
 import android.support.v7.app.ActionBarActivity;
@@ -37,7 +38,9 @@ public class MainActivity extends AppCompatActivity {
     Button aceptar;
     Button salir;
     ArrayList<String> listado= new ArrayList<String>();
-
+    MainJson modelojson;
+    MainEnvio modeloenvio;
+    Intent intentEnvio;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +59,10 @@ public class MainActivity extends AppCompatActivity {
 
         String password=contra.getText().toString();
         String server=servidor.getText().toString();
-        obtenerDatos(rut,password, server);
+
+
+
+       obtenerDatos(rut,password, server);
     }
     public void salidaOnClick(View v){
         this.finish();
@@ -78,10 +84,14 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
 
+                    modelojson= new MainJson();
+                    modeloenvio=new MainEnvio();
                     if (statusCode == 200) {
                         Log.i("en onsuccess", "Antes de verificar " + new String(responseBody));
                            if (responseBody.length!= 0) {
-                            envioListado(obtenerDatosJson(new String(responseBody)),rut, pass, serv);
+                            intentEnvio=(modeloenvio.cargaIntent(modelojson.obtenerDatosJson(new String(responseBody)), rut, pass, serv));
+                            intentEnvio.setClass(MainActivity.this,ListadoProducto.class);
+                            startActivity(intentEnvio);
                         }else{
                             Log.i("en onsuccess", "verificando contenido de responsebody " +responseBody.length);
                                Toast.makeText(MainActivity.this, "Usuario o Password incorrecto ", Toast.LENGTH_LONG).show();
@@ -110,58 +120,7 @@ public class MainActivity extends AppCompatActivity {
             Log.w("Catch de obtenerDatos","Detalles: "+ex.getLocalizedMessage());
         }
     }
-    public void envioListado(ArrayList<String> datos,String rut,String password, String server){
 
-        try{
-            Intent i = new Intent(this, ListadoProducto.class);
-
-            i.putExtra("rut",datos.get(0).toString());
-            i.putExtra("nombre",datos.get(1).toString());
-            i.putExtra("telefono",datos.get(2).toString());
-            i.putExtra("email",datos.get(3).toString());
-            i.putExtra("clave", datos.get(4));
-            i.putExtra("servidor", server);
-            Log.i("SALIDA MAIN ACTIVITY","ENTRADA LISTADO PROD");
-        startActivity(i);
-        }catch(Exception ex){
-            Log.w("catch de envioListado","Detalles: "+ex.getMessage());
-        }
-
-    }
-    public  ArrayList<String> obtenerDatosJson(String response){
-        ArrayList<String> listado= new ArrayList<>();
-
-        try{
-            JSONArray jsonarray= new JSONArray(response);
-            Log.w("Ex obtenerdatosjson","jsonarray tamano "+jsonarray.length());
-            String rut,nombre,telefono,email,clave;
-            for (int i=0;i<jsonarray.length();i++){
-                rut= jsonarray.getJSONObject(i).getString("RUT");
-                nombre= jsonarray.getJSONObject(i).getString("Nombre");
-                telefono=jsonarray.getJSONObject(i).getString("Telefono");
-                email=jsonarray.getJSONObject(i).getString("Email");
-                clave= jsonarray.getJSONObject(i).getString("Clave");
-
-                listado.add(rut);
-                Log.w("obtenerDatosJson", "RUT " + rut);
-                listado.add(nombre);
-                Log.w("obtenerDatosJson", "Nombre " + nombre);
-                listado.add(telefono);
-                Log.w("obtenerDatosJson", "Telefono" + telefono);
-                listado.add(email);
-                Log.w("obtenerDatosJson", "email"+email);
-                listado.add(clave);
-                Log.w("obtenerDatosJson", "clave"+clave);
-            }
-        }catch (Exception ex){
-
-
-            Log.w("Catch obtenerdatosjson","jsonarray"+ex.getMessage());
-        }
-
-        return listado;
-
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -169,7 +128,6 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
-
 
 
 

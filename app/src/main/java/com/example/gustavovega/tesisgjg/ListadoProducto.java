@@ -35,7 +35,6 @@ public class ListadoProducto extends AppCompatActivity {
     TextView totalmuestra;
     Button confirmar;
     Date horaPedido = new Date();
-
     List<ItemLista> item = new ArrayList<>();//lista de objects ItemLista, para albergar los datos necesarios.
     List<ItemLista> item2 = new ArrayList<>();
     List<ItemLista> headers = new ArrayList<>();
@@ -259,13 +258,14 @@ public class ListadoProducto extends AppCompatActivity {
         ArrayList<String> listado= new ArrayList<>();
 
         try{
-            Log.i("OBETENER DATOS JSON"," "+response+" ");
+
             JSONArray jsonarray= new JSONArray(response);
             String texto=" No entro for";
 
             for (int i=0;i<jsonarray.length();i++){
 
-                texto= jsonarray.getJSONObject(i).getString("id_productos")+" "+ jsonarray.getJSONObject(i).getString("nombre")+" "+ jsonarray.getJSONObject(i).getString("stock")+" "+ jsonarray.getJSONObject(i).getString("precio");
+                texto= jsonarray.getJSONObject(i).getString("id_productos")+"_"+ jsonarray.getJSONObject(i).getString("nombre")+"_"+ jsonarray.getJSONObject(i).getString("stock")+"_"+ jsonarray.getJSONObject(i).getString("precio");
+                Log.i("OBETENER DATOS JSON","TEXTO "+texto);
                 listado.add(texto);
 
 
@@ -286,6 +286,11 @@ public class ListadoProducto extends AppCompatActivity {
             separadosalmacen.add(sinespacio);
             j++;
         }
+    }
+    public String[] separar2(String valor){ //se separan los valores por los espacios encontrados, cada uno en una posición diferente
+        String[] valores;
+        valores=valor.split("_");
+        return valores;
     }
 
     public void cargaLista(List<String[]> datos){// recibe remplazo inicial y con stock actualizado.   // se vacia almacen para no repetir valores
@@ -311,11 +316,7 @@ public class ListadoProducto extends AppCompatActivity {
 
     }//se carga la lista de productos
 
-    public String[] separar2(String valor){ //se separan los valores por los espacios encontrados, cada uno en una posición diferente
-        String[] valores;
-        valores=valor.split(" ");
-        return valores;
-    }
+
 
 
     @Override

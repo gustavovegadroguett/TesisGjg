@@ -12,7 +12,7 @@ public class MainEnvio {
     public Intent cargaIntent(ArrayList<String> datos,String rut,String password, String server){
         Intent i = new Intent();
         try{
-
+            Log.i("MainEnvio CargaIntent", "cantidad "+datos.size());
 
             i.putExtra("rut",datos.get(0).toString());
             i.putExtra("nombre",datos.get(1).toString());
@@ -23,7 +23,7 @@ public class MainEnvio {
             Log.i("SALIDA MAIN ACTIVITY", "ENTRADA LISTADO PROD");
             return i;
         }catch(Exception ex){
-            Log.w("catch de envioListado","Detalles: "+ex.getMessage());
+            Log.w("MainEnvio CargaIntent","catch cargaIntent: "+ex.getMessage());
         }
         return i;
     }

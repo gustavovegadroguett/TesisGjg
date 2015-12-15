@@ -1,32 +1,17 @@
 package com.example.gustavovega.tesisgjg;
 
-import android.content.Context;
+
 import android.content.Intent;
-import android.os.Looper;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 import com.loopj.android.http.*;
-
-
-import org.json.JSONArray;
-
-
 import java.util.ArrayList;
-/*import java.util.logging.Handler;
-import org.apache.http.Header;
-import java.lang.reflect.Array;
-import java.net.UnknownHostException;
-*/
-
 import cz.msebera.android.httpclient.Header;
 
 
@@ -87,8 +72,8 @@ public class MainActivity extends AppCompatActivity {
                     modelojson= new MainJson();
                     modeloenvio=new MainEnvio();
                     if (statusCode == 200) {
-                        Log.i("en onsuccess", "Antes de verificar " + new String(responseBody));
-                           if (responseBody.length!= 0) {
+                        Log.i("en onsuccess", "Antes de verificar " + new String(responseBody) + " " + new String(responseBody).length());
+                           if ( !(new String(responseBody).equals("-1"))) {
                             intentEnvio=(modeloenvio.cargaIntent(modelojson.obtenerDatosJson(new String(responseBody)), rut, pass, serv));
                             intentEnvio.setClass(MainActivity.this,ListadoProducto.class);
                             startActivity(intentEnvio);
@@ -97,6 +82,8 @@ public class MainActivity extends AppCompatActivity {
                                Toast.makeText(MainActivity.this, "Usuario o Password incorrecto ", Toast.LENGTH_LONG).show();
 
                            }
+                    }else {
+                        Toast.makeText(MainActivity.this,"malo",Toast.LENGTH_LONG).show();
                     }
 
                 }

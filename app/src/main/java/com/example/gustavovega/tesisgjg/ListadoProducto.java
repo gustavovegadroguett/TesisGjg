@@ -1,8 +1,7 @@
 package com.example.gustavovega.tesisgjg;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -85,7 +84,7 @@ public class ListadoProducto extends AppCompatActivity {
 
         Rut = datosLogin.getString("rut");
         if (datosLogin != null) {
-            server.setText("Bienvenido estimado/a  " + datosLogin.getString("nombre"));
+            server.setText("Bienvenido/a " + datosLogin.getString("nombre"));
         }
         obtenerDatos(datosLogin.getString("servidor"));//se realiza la conexion para obtener datos
 
@@ -108,14 +107,21 @@ public class ListadoProducto extends AppCompatActivity {
                 startActivityForResult(enMovimiento, mRequestCode);
             }
         });
-
+        carrito.setEnabled(false);
         confirmar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String fecha = new SimpleDateFormat("dd-MM-yyyy").format(horaPedido);
-
-                hacerPedido(item2, datosLogin.getString("rut"), Integer.toString(totalalmacenado), datosLogin.getString("servidor"), fecha);
-
+                carrito.setAdapter(null);
+                confirmar.setEnabled(false);
+                String rut,total,servidor;
+                rut=datosLogin.getString("rut");
+                total=Integer.toString(totalalmacenado);
+                servidor=datosLogin.getString("servidor");
+                hacerPedido(item2, rut, total,servidor , fecha);
+                item2.clear();
+                totalalmacenado=0;
+                totalmuestra.setText(String.valueOf(totalalmacenado));
 
             }
         });
@@ -157,8 +163,11 @@ public class ListadoProducto extends AppCompatActivity {
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
 
                 int resultado =1;
+
                 if (statusCode == 200 && responseBody.length != 0) {
+
                     resultado =Integer.parseInt(new String(responseBody));
+                    Log.i("onsucchacped resultado", " "+ resultado);
                     insertarPedido(datosPedido, resultado, serv);
                     resultado = resultado + 1;
                     Log.i("onsuccess hacer pedido", " "+enviarJson.toString());
@@ -169,7 +178,8 @@ public class ListadoProducto extends AppCompatActivity {
                     insertarDetalle(enviarJson, resultado, serv);
 
                 }
-                carrito.setAdapter(null);
+
+
             }
 
             @Override
@@ -180,36 +190,10 @@ public class ListadoProducto extends AppCompatActivity {
 
         });
     }
-
-    public void insertarDetalle(JSONArray datosPedido, final int resultado, String serv) {
-
-        AsyncHttpClient cliente = new AsyncHttpClient();
-        Log.i("insertar detalle", "servidor " + serv);
-        String URL = "http://" + serv + "/tesis/Android/envioDetalles.php";
-        RequestParams json = new RequestParams();
-        json.put("id", resultado);
-        json.put("jsonarray", datosPedido);
-        Log.i("insertar detalle", " " + resultado);
-        cliente.post(URL, json, new AsyncHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-
-                String prueba=new String(responseBody);
-                Toast.makeText(ListadoProducto.this, "Pedido Ingresado con id " + prueba, Toast.LENGTH_LONG).show();
-
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                Toast.makeText(ListadoProducto.this, "ON fail de insertarDetalle", Toast.LENGTH_LONG).show();
-
-            }
-        });
-    }
     public void insertarPedido(RequestParams datosPedido, final int resultado, String serv){
 
         AsyncHttpClient cliente = new AsyncHttpClient();
-        Log.i("hacerPedido", "servidor " + serv);
+        Log.i("inserpedido", "servidor " + serv);
         String URL = "http://" + serv + "/tesis/Android/envioPedido.php";
 
         cliente.post(URL, datosPedido, new AsyncHttpResponseHandler() {
@@ -227,6 +211,33 @@ public class ListadoProducto extends AppCompatActivity {
             }
         });
     }
+    public void insertarDetalle(JSONArray datosPedido, final int resultado, String serv) {
+
+        AsyncHttpClient cliente = new AsyncHttpClient();
+        Log.i("insertar detalle", "servidor " + serv);
+        String URL = "http://" + serv + "/tesis/Android/envioDetalles.php";
+        RequestParams json = new RequestParams();
+        json.put("id", resultado);
+        json.put("jsonarray", datosPedido);
+        Log.i("insertar detalle", " " + resultado);
+        cliente.post(URL, json, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+
+                String prueba=new String(responseBody);
+                Log.i("Listaprod insertdet", prueba+ " " + resultado);
+                Toast.makeText(ListadoProducto.this, "Se realizo la reserva de  " + prueba+" productos con la id  "+resultado, Toast.LENGTH_LONG).show();
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                Toast.makeText(ListadoProducto.this, "ON fail de insertarDetalle", Toast.LENGTH_LONG).show();
+
+            }
+        });
+    }
+
     public void  obtenerDatos(final String serv) { //Aqui se consulta a la base de datos via  metodos asincronos
         AsyncHttpClient cliente = new AsyncHttpClient();
         Log.i("obetenerdatos Listado", "servidor "+serv);
@@ -324,7 +335,8 @@ public class ListadoProducto extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, pedidoCuantos);
         /*try{*/
             int subtotal=0;
-            String catidadcalc,preciocalc;
+                    String catidadcalc,preciocalc;
+
 
 
             if(requestCode == mRequestCode && resultCode == RESULT_OK){
@@ -372,6 +384,10 @@ public class ListadoProducto extends AppCompatActivity {
 
                             carrito.setAdapter(adaptaCarro);
                             adaptaCarro.notifyDataSetChanged();
+                            if(carrito.getAdapter()!=null){
+                                confirmar.setEnabled(true);
+
+                            }
 
                         }
                     });
@@ -380,11 +396,9 @@ public class ListadoProducto extends AppCompatActivity {
                 }
 
             }else{
-                Toast.makeText(this,"volvio mal =(",Toast.LENGTH_SHORT).show();
+
             }
-        /*}catch (Exception ex){
-            Log.w("onActivityResult","catch fuera " + ex.getMessage());
-        }*/
+
     }
 
 
